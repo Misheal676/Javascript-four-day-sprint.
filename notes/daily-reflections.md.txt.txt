@@ -21,3 +21,26 @@ the price they actually pay.
 - 0.1 * 3 gives 0.30000000000000004, so I use to Fixed(2) when showing money.
 - get Discounted Total returns null for invalid input so the caller can tell
   "no valid result" apart from a real total of 0.
+
+# Day 2 reflections
+
+## Block 1: arrays and object records
+
+- A task is an object with id, title, completed and priority. I keep
+  several of them in an array (sample Tasks).
+- add Task, complete Task, delete Task and rename Task do not change the
+  original array. They return a new one, using the spread operator
+  [...tasks] and { ...task }, map and filter.
+- Invalid requests: a blank title or an unknown id returns the list
+  unchanged. I chose this so the caller always gets a valid array back
+  and nothing crashes.
+- add Task gives the new task an id of the highest current id + 1, so ids
+  stay unique even after a delete.
+
+## Challenge 5: Immutable toggle
+
+toggle Task uses map and copies the matching task with the spread
+operator, flipping completed with !task. Completed. Proof: after
+toggling task 2, toggled[1].completed is false but
+sample Tasks[1].completed is still true, so the original was not
+mutated. An unknown id (99) returns all five tasks unchanged.

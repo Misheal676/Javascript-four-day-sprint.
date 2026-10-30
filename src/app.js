@@ -228,5 +228,23 @@ console.log(toggled[1].completed);       // false
 console.log(sampleTasks[1].completed);   // true
 console.log(toggleTask(sampleTasks, 99)); // all five tasks, unchanged
 
+// ===== DAY 2 - Block 2 =====
+const openTitles = sampleTasks
+  .filter(task => !task.completed)
+  .map(task => task.title);
+console.log(openTitles);                      // 4 titles (all but "Draft outline")
+
+console.log(sampleTasks.find(task => task.id === 3));   // the "Write functions" task
+console.log(sampleTasks.some(task => task.priority === "high"));  // true
+console.log(sampleTasks.every(task => task.completed));            // false
+
+const countByPriority = sampleTasks.reduce((counts, task) => {
+  if (task.completed) {
+    counts[task.priority] = (counts[task.priority] || 0) + 1;
+  }
+  return counts;
+}, {});
+console.log(countByPriority);                 // { medium: 1 }
+
 
 
