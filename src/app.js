@@ -246,5 +246,9 @@ const countByPriority = sampleTasks.reduce((counts, task) => {
 }, {});
 console.log(countByPriority);                 // { medium: 1 }
 
+const openTasks = sampleTasks.filter(task => !task.completed);
+const openTaskTitles = openTasks.map(task => task.title);
+console.log(openTaskTitles);   // same four titles
+
 
 
