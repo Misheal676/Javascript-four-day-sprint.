@@ -301,4 +301,29 @@ try {
   console.log("PASS: blank title rejected");
 }
 
+class TaskList {
+  #tasks = [];
 
+  add(task) {
+    this.#tasks.push(task);
+  }
+
+  remove(id) {
+    this.#tasks = this.#tasks.filter(task => task.id !== id);
+  }
+
+  findById(id) {
+    return this.#tasks.find(task => task.id === id);
+  }
+
+  getOpenTasks() {
+    return this.#tasks.filter(task => !task.completed);
+  }
+}
+const list = new TaskList();
+list.add(new Task(1, "Read brief", "high"));
+list.add(new Task(2, "Draft outline"));
+list.findById(1).complete();
+console.log(list.getOpenTasks().length);   // 1
+list.remove(2);
+console.log(list.findById(2));             // undefined
