@@ -29,3 +29,20 @@ console.log(`${hours} hours and ${remaining} minutes`);
 
 const hours2 = (minutes - (minutes % 60)) / 60;
 console.log(`${hours2} hours and ${remaining} minutes`);
+
+
+
+function getDiscountedTotal(total, member) {
+  if (!Number.isFinite(total) || total < 0) return null;
+  if (member && total >= 50) return total * 0.9;
+  return total;
+}
+console.log(getDiscountedTotal(49.99, true));   // member, just under 50
+console.log(getDiscountedTotal(50, true));      // member, exactly 50
+console.log(getDiscountedTotal(80, false));     // non-member
+console.log(getDiscountedTotal(80, true));      // member
+console.log(getDiscountedTotal(-5, true));      // invalid
+function gradeLabel(score) {
+  // A: 90+, B: 80-89, C: 70-79, D: 60-69, F: below 60
+  // return "Invalid" if score is below 0 or above 100
+}
