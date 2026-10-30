@@ -249,6 +249,24 @@ console.log(countByPriority);                 // { medium: 1 }
 const openTasks = sampleTasks.filter(task => !task.completed);
 const openTaskTitles = openTasks.map(task => task.title);
 console.log(openTaskTitles);   // same four titles
+function summarizePurchases(purchases) {
+  if (purchases.length === 0) {
+    return { total: 0, count: 0, average: 0, mostExpensive: null };
+  }
+  const total = purchases.reduce((sum, p) => sum + p.price, 0);
+  const count = purchases.length;
+  const average = total / count;
+  const mostExpensive = purchases.reduce((best, p) => p.price > best.price ? p : best);
+  return { total, count, average, mostExpensive };
+}
+
+console.log(summarizePurchases([]));
+console.log(summarizePurchases([{ name: "Pen", price: 2 }]));
+console.log(summarizePurchases([
+  { name: "Book", price: 15 },
+  { name: "Bag", price: 40 },
+  { name: "Lamp", price: 40 }
+]));
 
 
 

@@ -44,3 +44,21 @@ operator, flipping completed with !task. Completed. Proof: after
 toggling task 2, toggled[1].completed is false but
 sample Tasks[1].completed is still true, so the original was not
 mutated. An unknown id (99) returns all five tasks unchanged.
+
+## Block 2: array methods
+
+- filter keeps matching items, map transforms each item, find returns
+  the first match, some/every answer yes/no, reduce builds one result.
+- In reduce, the accumulator starts as an empty object {}. For each
+  completed task I add 1 to the count for its priority, then return the
+  object so the next task can use it.
+- Named variables like open Tasks make each step easier to read and debug
+  than one long chain.
+
+## Challenge 6: Purchase summary
+
+- An empty list returns total 0, count 0, average 0 and most Expensive
+  null, so there is no crash and no division by zero.
+- On a tie, the first item wins, because I only replace the best item
+  when a price is strictly greater.
+- A single item works: it is both the total and the most expensive.
