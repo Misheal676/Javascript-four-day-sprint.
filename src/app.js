@@ -46,3 +46,19 @@ function gradeLabel(score) {
   // A: 90+, B: 80-89, C: 70-79, D: 60-69, F: below 60
   // return "Invalid" if score is below 0 or above 100
 }
+
+function gradeLabel(score) {
+  if (score < 0 || score > 100) return "Invalid";
+  if (score >= 90) return "A";
+  if (score >= 80) return "B";
+  if (score >= 70) return "C";
+  if (score >= 60) return "D";
+  return "F";
+}
+
+console.log(gradeLabel(89));   // B
+console.log(gradeLabel(90));   // A
+console.log(gradeLabel(0));    // F
+console.log(gradeLabel(100));  // A
+console.log(gradeLabel(-1));   // Invalid
+console.log(gradeLabel(101));  // Invalid
