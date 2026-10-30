@@ -178,6 +178,55 @@ console.log("Total:", formatMoney(subtotalBeforeTax + taxAmount));
 const wrongTax = calculateTax(70); // tax on the undiscounted 70
 console.log(taxAmount < wrongTax ? "PASS: tax uses discounted subtotal" : "FAIL")
 
+// ===== DAY 2 - Block 1 =====
+const sampleTasks = [
+  { id: 1, title: "Read brief", completed: false, priority: "high" },
+  { id: 2, title: "Draft outline", completed: true, priority: "medium" },
+  { id: 3, title: "Write functions", completed: false, priority: "high" },
+  { id: 4, title: "Test edge cases", completed: false, priority: "low" },
+  { id: 5, title: "Push to GitHub", completed: false, priority: "medium" }
+];
+
+console.log(sampleTasks[0].title);   // Read brief
+console.table(sampleTasks);
+
+function addTask(tasks, title, priority = "normal") {
+  const cleanTitle = title.trim();
+  if (!cleanTitle) return tasks;   // blank title: return the list unchanged
+  const newId = tasks.length === 0 ? 1 : Math.max(...tasks.map(t => t.id)) + 1;
+  return [...tasks, { id: newId, title: cleanTitle, completed: false, priority: priority }];
+}
+
+function completeTask(tasks, id) {
+  return tasks.map(task => task.id === id ? { ...task, completed: true } : task);
+}
+
+function deleteTask(tasks, id) {
+  return tasks.filter(task => task.id !== id);
+}
+
+function renameTask(tasks, id, newTitle) {
+  const cleanTitle = newTitle.trim();
+  if (!cleanTitle) return tasks;
+  return tasks.map(task => task.id === id ? { ...task, title: cleanTitle } : task);
+}
+const afterAdd = addTask(sampleTasks, "  Review PR  ", "high");
+console.log(afterAdd.length, sampleTasks.length);          // 6 5
+console.log(addTask(sampleTasks, "   ").length);            // 5 (blank rejected)
+console.log(completeTask(sampleTasks, 1)[0].completed);     // true
+console.log(sampleTasks[0].completed);                      // false (original untouched)
+console.log(deleteTask(sampleTasks, 2).length);             // 4
+console.log(deleteTask(sampleTasks, 99).length);            // 5 (unknown id)
+console.log(renameTask(sampleTasks, 3, "Write tests")[2].title);
+
+function toggleTask(tasks, id) {
+  return tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
+}
+
+const toggled = toggleTask(sampleTasks, 2);
+console.log(toggled[1].completed);       // false
+console.log(sampleTasks[1].completed);   // true
+console.log(toggleTask(sampleTasks, 99)); // all five tasks, unchanged
 
 
 

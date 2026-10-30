@@ -1,0 +1,23 @@
+# Day 1 reflections
+
+## Challenge 1: Minutes to hours
+137 / 60 gives 2.2833..., a decimal fraction of an hour. I need whole
+hours and leftover minutes, so I use Math. Floor for hours and % for the remainder.
+
+## Challenge 2: Grade labels
+The invalid check comes first. Otherwise grade Label(150) would return "A"
+because 150 >= 90 is true.
+
+## Challenge 3: Fizz Buzz
+The combined check (3 and 5) comes first because 15 is a multiple of both.
+If "multiple of 3" came first, 15 would become "Fizz".
+
+## Challenge 4: Discounted cart tax
+Tax is calculated after the line discounts, so the customer is taxed on
+the price they actually pay.
+
+## Other notes
+- type of null returns "object". This is a known JavaScript quirk.
+- 0.1 * 3 gives 0.30000000000000004, so I use to Fixed(2) when showing money.
+- get Discounted Total returns null for invalid input so the caller can tell
+  "no valid result" apart from a real total of 0.
