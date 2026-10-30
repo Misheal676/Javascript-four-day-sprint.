@@ -268,5 +268,37 @@ console.log(summarizePurchases([
   { name: "Lamp", price: 40 }
 ]));
 
+// ===== DAY 2 - Block 3 =====
+class Task {
+  #completed = false;
+
+  constructor(id, title, priority = "normal") {
+    if (!title || !title.trim()) throw new Error("Title is required");
+    this.id = id;
+    this.title = title.trim();
+    this.priority = priority;
+  }
+
+  get completed() { return this.#completed; }
+  complete() { this.#completed = true; }
+  toggle() { this.#completed = !this.#completed; }
+  rename(newTitle) {
+    if (!newTitle || !newTitle.trim()) throw new Error("Title is required");
+    this.title = newTitle.trim();
+  }
+  describe() { return this.title + " (" + this.priority + ")"; }
+}
+
+const t = new Task(1, "Learn classes", "high");
+console.log(t.completed);    // false
+t.complete();
+console.log(t.completed);    // true
+console.log(t.describe());   // Learn classes (high)
+
+try {
+  new Task(2, "   ");
+} catch (error) {
+  console.log("PASS: blank title rejected");
+}
 
 
