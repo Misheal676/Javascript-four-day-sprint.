@@ -350,3 +350,83 @@ console.log(r.completed);    // true
 const composedTask = new Task(11, "Call mentor", "medium");
 const withReminder = { task: composedTask, reminder: { dueDate: "2026-11-03" } };
 console.log(withReminder.task.describe() + " - due " + withReminder.reminder.dueDate);
+
+// ===== DAY 2 - Block 4 =====
+
+// Step 31: one named helper for the repeated title check
+function validateTitle(title) {
+  if (typeof title !== "string" || !title.trim()) {
+    throw new Error("Title is required");
+  }
+  return title.trim();
+}
+
+// Step 29: storage-shaped operations. Task owns behaviour, the repository owns the collection.
+class TaskRepository {
+  #tasks = [];
+  #nextId = 1;
+
+  create(title, priority = "normal") {
+    const task = new Task(this.#nextId++, validateTitle(title), priority);
+    this.#tasks.push(task);
+    return task;
+  }
+
+  getAll() { return [...this.#tasks]; }
+  getById(id) { return this.#tasks.find(t => t.id === id); }
+  getOpen() { return this.#tasks.filter(t => !t.completed); }
+
+  delete(id) {
+    const before = this.#tasks.length;
+    this.#tasks = this.#tasks.filter(t => t.id !== id);
+    return this.#tasks.length < before;   // true if something was deleted
+  }
+}
+
+// Step 30 and 32: manual tests
+function check(name, condition) {
+  console.log((condition ? "PASS: " : "FAIL: ") + name);
+}
+
+const repo = new TaskRepository();
+const first = repo.create("Write tests", "high");
+repo.create("Review code");
+check("create adds tasks", repo.getAll().length === 2);
+
+first.complete();
+check("complete works", repo.getById(1).completed === true);
+check("filter open", repo.getOpen().length === 1);
+
+try {
+  repo.create("   ");
+  check("blank title rejected", false);
+} catch (error) {
+  check("blank title rejected", true);
+}
+
+check("unknown id: getById", repo.getById(99) === undefined);
+check("unknown id: delete", repo.delete(99) === false);
+check("delete known id", repo.delete(2) === true && repo.getAll().length === 1);
+
+const emptyRepo = new TaskRepository();
+check("empty repo", emptyRepo.getAll().length === 0 && emptyRepo.getOpen().length === 0);
+
+function getTaskStats(tasks) {
+  const total = tasks.length;
+  const completed = tasks.filter(t => t.completed).length;
+  const open = total - completed;
+  const completionRate = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  const byPriority = tasks.reduce((counts, t) => {
+    counts[t.priority] = (counts[t.priority] || 0) + 1;
+    return counts;
+  }, {});
+
+  return { total, completed, open, completionRate, byPriority };
+}
+
+const stats = getTaskStats(sampleTasks);
+console.log(stats);
+console.log(stats.total === stats.completed + stats.open);
+console.log(Object.values(stats.byPriority).reduce((a, b) => a + b, 0) === stats.total);
+console.log(getTaskStats([]));

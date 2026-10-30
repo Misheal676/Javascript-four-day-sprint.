@@ -86,3 +86,9 @@ mutated. An unknown id (99) returns all five tasks unchanged.
   a different kind of task, so a subclass is not warranted. Inheritance
   would make every reminder a Task permanently, which is rigid and adds
   complexity without a benefit here.
+## Challenge 8: Task statistics
+
+- completion Rate is 0 for an empty list to avoid dividing by zero.
+- open is total minus completed, so total = completed + open always holds.
+- by Priority uses reduce with an object accumulator; the counts sum to
+  the total, which I checked in the console.
