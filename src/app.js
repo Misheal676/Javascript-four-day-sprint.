@@ -126,8 +126,57 @@ function formatMoney(amount) {
 console.log(formatMoney(calculateLineTotal(12.5, 3)));  // $37.50
 console.log(formatMoney(calculateTax(37.5)));           // $3.00
 
+function printReceipt(items) {
+  let subtotal = 0;
+  for (const item of items) {
+    const lineTotal = calculateLineTotal(item.price, item.quantity);
+    subtotal += lineTotal;
+    console.log(`${item.name} x${item.quantity}: ${formatMoney(lineTotal)}`);
+  }
+  const tax = calculateTax(subtotal);
+  console.log(`Subtotal: ${formatMoney(subtotal)}`);
+  console.log(`Tax: ${formatMoney(tax)}`);
+  console.log(`Total: ${formatMoney(subtotal + tax)}`);
+}
 
+printReceipt([
+  { name: "Notebook", price: 12.5, quantity: 3 },
+  { name: "Pen", price: 1.2, quantity: 10 }
+]);
 
+try {
+  calculateLineTotal("abc", 2);
+  console.log("FAIL: no error thrown");
+} catch (error) {
+  console.log("PASS: invalid input rejected:", error.message);
+}
+console.log(calculateLineTotal(5, 0));            // 0 (zero quantity)
+console.log(calculateLineTotal(0.1, 3));          // about 0.3 (decimal price)
+console.log(formatMoney(calculateLineTotal(19.99, 2))); // $39.98
+console.log(formatMoney(0));                      // $0.00
+
+try {
+  calculateLineTotal(5, -1);
+  console.log("FAIL: no error thrown");
+} catch (error) {
+  console.log("PASS: negative quantity rejected");
+}
+function calculateDiscountedLineTotal(price, quantity) {
+  const lineTotal = calculateLineTotal(price, quantity);
+  return quantity > 5 ? lineTotal * 0.95 : lineTotal;
+}
+
+const line1 = calculateDiscountedLineTotal(10, 6);  // 60 -> 57
+const line2 = calculateDiscountedLineTotal(5, 2);   // 10, no discount
+const subtotalBeforeTax = line1 + line2;            // 67
+const taxAmount = calculateTax(subtotalBeforeTax);  // 5.36
+console.log("Subtotal before tax:", formatMoney(subtotalBeforeTax));
+console.log("Tax:", formatMoney(taxAmount));
+console.log("Total:", formatMoney(subtotalBeforeTax + taxAmount));
+
+// Proof that tax is calculated after the discount
+const wrongTax = calculateTax(70); // tax on the undiscounted 70
+console.log(taxAmount < wrongTax ? "PASS: tax uses discounted subtotal" : "FAIL")
 
 
 
