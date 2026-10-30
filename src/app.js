@@ -62,3 +62,54 @@ console.log(gradeLabel(0));    // F
 console.log(gradeLabel(100));  // A
 console.log(gradeLabel(-1));   // Invalid
 console.log(gradeLabel(101));  // Invalid
+
+// ===== Block 3 =====
+const prices = [5, 12, 25, 8, 30];
+
+function getTotal(list) {
+  if (list.length === 0) return 0;
+  let sum = 0;
+  for (const price of list) {
+    sum += price;
+  }
+  return sum;
+}
+
+function countAbove(list, limit) {
+  let count = 0;
+  for (const price of list) {
+    if (price > limit) count++;
+  }
+  return count;
+}
+
+console.log(getTotal(prices));        // 80
+console.log(countAbove(prices, 20));  // 2
+console.log(getTotal([]));            // 0
+const reduceTotal = prices.reduce((sum, item) => sum + item, 0);
+console.log(reduceTotal); // 80
+function fizzBuzz(limit) {
+  const results = [];
+  for (let i = 1; i <= limit; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      results.push("FizzBuzz");
+    } else if (i % 3 === 0) {
+      results.push("Fizz");
+    } else if (i % 5 === 0) {
+      results.push("Buzz");
+    } else {
+      results.push(i);
+    }
+  }
+  return results;
+}
+
+console.log(fizzBuzz(15));
+console.log(fizzBuzz(16));
+
+
+
+
+
+
+
