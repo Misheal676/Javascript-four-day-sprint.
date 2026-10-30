@@ -107,6 +107,25 @@ function fizzBuzz(limit) {
 console.log(fizzBuzz(15));
 console.log(fizzBuzz(16));
 
+// ===== Block 4 =====
+function calculateLineTotal(price, quantity) {
+  if (!Number.isFinite(price) || !Number.isInteger(quantity) || price < 0 || quantity < 0) {
+    throw new Error("Price and quantity must be valid non-negative numbers.");
+  }
+  return price * quantity;
+}
+
+function calculateTax(amount) {
+  return amount * 0.08;
+}
+
+function formatMoney(amount) {
+  return `$${amount.toFixed(2)}`;
+}
+
+console.log(formatMoney(calculateLineTotal(12.5, 3)));  // $37.50
+console.log(formatMoney(calculateTax(37.5)));           // $3.00
+
 
 
 
