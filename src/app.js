@@ -327,3 +327,26 @@ list.findById(1).complete();
 console.log(list.getOpenTasks().length);   // 1
 list.remove(2);
 console.log(list.findById(2));             // undefined
+
+// Version 1: inheritance
+class Reminder extends Task {
+  constructor(id, title, priority, dueDate) {
+    super(id, title, priority);
+    this.dueDate = dueDate;
+  }
+
+  describe() {
+    return super.describe() + " - due " + this.dueDate;
+  }
+}
+
+const r = new Reminder(10, "Submit sprint", "high", "2026-11-02");
+console.log(r.describe());   // Submit sprint (high) - due 2026-11-02
+console.log(r.completed);    // false
+r.complete();
+console.log(r.completed);    // true
+
+// Version 2: composition
+const composedTask = new Task(11, "Call mentor", "medium");
+const withReminder = { task: composedTask, reminder: { dueDate: "2026-11-03" } };
+console.log(withReminder.task.describe() + " - due " + withReminder.reminder.dueDate);

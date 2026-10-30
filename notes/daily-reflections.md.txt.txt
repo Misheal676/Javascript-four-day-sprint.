@@ -62,3 +62,27 @@ mutated. An unknown id (99) returns all five tasks unchanged.
 - On a tie, the first item wins, because I only replace the best item
   when a price is strictly greater.
 - A single item works: it is both the total and the most expensive.
+
+## Block 3: object-oriented programming
+
+- Task is a class. The constructor sets id, title and priority and
+  rejects a blank title. Each new Task(...) is an instance.
+- completed is a private field (#completed). Code outside the class
+  cannot change it directly, only through complete() and toggle().
+  This keeps the state predictable, because every change goes through
+  methods that I control.
+- Task List owns a private #tasks array and exposes add, remove,
+  find By Id and get Open Tasks. It has no console or screen code, so the
+  same class can be reused with any interface later.
+
+## Challenge 7: Inheritance and composition
+
+- Inheritance version: Reminder extends Task, adds due Date, and
+  overrides describe() using super. Describe() plus the due date.
+- Composition version: a plain Task sits beside a separate reminder
+  object holding the due Date.
+- Decision: for this app I choose composition (or just an optional
+  due Date field). A due date is one extra piece of optional data, not
+  a different kind of task, so a subclass is not warranted. Inheritance
+  would make every reminder a Task permanently, which is rigid and adds
+  complexity without a benefit here.
